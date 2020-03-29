@@ -29,7 +29,7 @@ stepsPerDay <- tapply(activity$steps, activity$date, sum, na.rm = TRUE)
 
 We display this this data in a histogram showing the distribution of steps per day.
 ```{r }
-qplot(stepsPerDay, xlab = "Total Steps Per Day", ylab= "Frequency", bins = 30)
+qplot(stepsPerDay, xlab = "Total Steps Per Day", ylab= "Frequency", bins = 50)
 ```
 
 The same array can provide the mean and median steps per day:
@@ -40,11 +40,26 @@ stepsPerDay.median <- median(stepsPerDay)
 
 This tells us:
 
-- Steps per Day (mean): `r stepsPerDay.mean`
-- Steps per Day (median): `r stepsPerDay.median`
-
+- Steps per Day (mean): `r stepsPerDay.mean`.
+.
 ## What is the average daily activity pattern?
 
+From the activity data, we create an array of the mean number of steps taken in each timer interval. 
+We then plot thiss:
+```{r}
+avgStepsPerInterval <- tapply(activity$steps, activity$interval, mean, na.rm = TRUE)
+intervals           <- levels(as.factor(activity$interval))
+plot(intervals, avgStepsPerInterval, type = "l", 
+     main = "Average Steps per Time Interval", 
+     xlab = "Interval", 
+     ylab = "Mean Steps")
+```
+
+Using the same array we can find the time interval in which the most steps are recorded:
+```{r}
+interval.max <- names(which.max(avgStepsPerInterval))
+```
+The maximum number of steps is taken in interval `r interval.max`.
 
 ## Imputing missing values
 
