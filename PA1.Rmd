@@ -63,7 +63,7 @@ interval.max <- names(which.max(avgStepsPerInterval))
 The maximum number of steps is taken in interval `r interval.max`.
 
 ## Imputing missing values
-We can find the number of missing step entries by counting the number of NAs.
+We can find the number of missing step entries by counting the number of NAs:
 ```{r}
 steps.missing <- sum(is.na(activity$steps))
 ```
@@ -72,7 +72,7 @@ This indicates that there are `r steps.missing` incomplete records.
 
 Our strategy for filling in the missing values in the dataset is to replace them with the mean value for the time interval.
 
-We create a new data frame, replacing the any NA steps with the mean value obtained from the `avgStepsPerInterval` array we created earlier.
+We create a new data frame, replacing the any NA steps with the mean value obtained from the `avgStepsPerInterval` array we created earlier:
 
 ```{r}
 activity.imputed      <- transform(activity, 
