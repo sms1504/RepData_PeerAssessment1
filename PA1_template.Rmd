@@ -46,7 +46,7 @@ This tells us:
 ## What is the average daily activity pattern?
 
 From the activity data, we create an array of the mean number of steps taken in each timer interval. 
-We then plot this:
+We then plot:
 ```{r}
 avgStepsPerInterval <- tapply(activity$steps, activity$interval, mean, na.rm = TRUE)
 intervals           <- levels(as.factor(activity$interval))
@@ -102,3 +102,15 @@ This tells us:
 Imputting the missing step data has reduced the frequency of the zero-step intervals and distributed, allocating the data to different bins. Consequently, the mean and median values have increased.
 
 ## Are there differences in activity patterns between weekdays and weekends?
+We add a factor indicating whether the day is a weekday or weekend:
+```{r}
+activity.imputed$dayType <- as.factor(ifelse(as.POSIXlt(activity.imputed$date)$wday %in% c(0,6),
+                                             'weekend', 'weekday'))
+```
+
+We calculate the steps per interval per day type based on the imputed data and plot the data for weekend and weekdays.
+```{r}
+intervalDayType <- aggregate(steps ~ interval + dayType, activity.imputed, mean)
+qplot(interval, steps, data = intervalDayType, facets = dayType ~ ., size=I(0)) + geom_line()
+```
+
