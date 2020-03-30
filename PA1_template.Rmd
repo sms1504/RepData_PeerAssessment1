@@ -18,7 +18,7 @@ unzip("activity.zip")
 activity <- read.csv("activity.csv")
 ```
 
-TODO: preprocess
+No additional processing is required to clean-up the dataset.
 
 ## What is mean total number of steps taken per day?
 
@@ -111,6 +111,10 @@ activity.imputed$dayType <- as.factor(ifelse(as.POSIXlt(activity.imputed$date)$w
 We calculate the steps per interval per day type based on the imputed data and plot the data for weekend and weekdays.
 ```{r}
 intervalDayType <- aggregate(steps ~ interval + dayType, activity.imputed, mean)
-qplot(interval, steps, data = intervalDayType, facets = dayType ~ ., size=I(0)) + geom_line()
+qplot(interval, steps, data = intervalDayType, facets = dayType ~ ., 
+      xlab = "Interval", 
+      ylab= "Mean Steps", 
+      size=I(0)) + 
+  geom_line()
 ```
 
